@@ -11,7 +11,7 @@ const router = createBrowserRouter([
      path:'/',
      element:<MainLayout/>,
      errorElement:<Error/>,
-    children:[
+        children:[
         {
             index:1,
             element:<Hero/>
@@ -35,7 +35,10 @@ const router = createBrowserRouter([
 ])
 const Routes = ()=>{
     return(
-        <RouterProvider router={router}/>
+        <div className="min-h-[70vh]">
+            <RouterProvider router={router}/>
+        </div>
+        
     )
    
 }
