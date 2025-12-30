@@ -85,7 +85,7 @@ const Hero = () => {
           />
         </div>
 
-        <button className="flex items-center justify-center gap-1 rounded-md bg-black py-3 px-4 text-white my-auto cursor-pointer max-md:w-full max-md:py-1">
+        <button className="flex items-center justify-center gap-1 rounded-md bg-black py-3 px-4 text-white my-auto cursor-pointer max-md:w-full max-md:py-1 mt-5">
            <img
               src={assets.searchIcon}
               alt="searchIcon"
