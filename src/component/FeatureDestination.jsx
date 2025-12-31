@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 const FeatureDestination = () => {
   return (
-    <div className="flex flex-col items-center px-6 md:px-16 lg:px-24 bg-slate-50 py-20">
+    <div className="flex flex-col items-center  md:px-16 lg:px-24 bg-slate-50 py-20">
       <Header
         title={"Feature Destination"}
         description={
