@@ -1,6 +1,7 @@
 import React from 'react'
 import Header from './Header';
 import { assets, testimonials } from '../assets/assets';
+import StarRating from './StarRating';
 
 const Testimonial = () => {
   return (
@@ -22,11 +23,7 @@ const Testimonial = () => {
                     </div>
                 </div>
                 <div className='flex items-center gap-1 mt-4'>
-                    <img src={assets.starIconFilled} className='w-4.5 h-4.5' alt="star-icon" />
-                    <img src={assets.starIconFilled} className='w-4.5 h-4.5' alt="star-icon" />
-                    <img src={assets.starIconFilled} className='w-4.5 h-4.5' alt="star-icon" />
-                    <img src={assets.starIconFilled} className='w-4.5 h-4.5' alt="star-icon" />
-                    <img src={assets.starIconOutlined} className='w-4.5 h-4.5' alt="star-icon" />
+                  <StarRating/>
                 </div>
                 <p className='text-gray-500 max-w-90 mt-4'>{testimonial.review}</p>
             </div>
