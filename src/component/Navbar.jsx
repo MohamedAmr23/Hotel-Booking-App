@@ -3,6 +3,8 @@ import { assets } from "../assets/assets";
 import { useClerk, UserButton, useUser } from "@clerk/clerk-react";
 import { useLocation, useNavigate } from "react-router-dom";
 const Navbar = () => {
+  const {pathname} = useLocation()
+  const isNotHomePage = pathname !== "/";
   const navLinks = [
     { name: "Home", path: "/" },
     { name: "Hotels", path: "/rooms" },
@@ -39,15 +41,16 @@ const Navbar = () => {
   }, [location.pathname]);
   return (
     <nav
+
       className={`fixed top-0 left-0  w-full flex items-center justify-between px-4 md:px-16 lg:px-24 xl:px-32 transition-all duration-500 z-50 ${
         isScrolled
           ? "bg-white/80 shadow-md text-gray-700 backdrop-blur-lg py-3 md:py-4"
-          : "py-4 md:py-6 "
-      }`}
+          : "py-4 md:py-6"
+      } ${isNotHomePage && 'bg-white shadow-md text-gray-700'}`}
     >
       {/* Logo */}
       <a href="/">
-        <img src={assets.logo} alt="Logo" className={`${isScrolled ? "invert" : ""}`} />
+        <img src={assets.logo} alt="Logo" className={`${isScrolled ? "invert" : ""} ${isNotHomePage && 'invert'}`} />
       </a>
 
       {/* Desktop Nav */}
@@ -58,13 +61,13 @@ const Navbar = () => {
             href={link.path}
             className={`group flex flex-col gap-0.5 ${
               isScrolled ? "text-gray-700" : "text-white"
-            }`}
+            } ${isNotHomePage && 'text-gray-700'}`}
           >
             {link.name}
             <div
               className={`${
                 isScrolled ? "bg-gray-700" : "bg-white"
-              } h-0.5 w-0 group-hover:w-full transition-all duration-300`}
+              } ${isNotHomePage && 'bg-gray-700'} h-0.5 w-0 group-hover:w-full transition-all duration-300`}
             />
           </a>
         ))}
@@ -72,7 +75,7 @@ const Navbar = () => {
           onClick={()=>navigate('/owner')}
           className={`border px-4 py-1 text-sm font-light rounded-full cursor-pointer ${
             isScrolled ? "text-black" : "text-white"
-          } transition-all`}
+          } ${isNotHomePage && 'text-black'} transition-all`}
         >
           Dashboard
         </button>}
@@ -86,7 +89,7 @@ const Navbar = () => {
           alt="search icon"
           className={`${
             isScrolled && "invert"
-          } h-7 transition-all duration-500`}
+          } ${isNotHomePage && 'invert'} h-7 transition-all duration-500`}
         />
         {user ? (
           <UserButton>
@@ -99,7 +102,7 @@ const Navbar = () => {
             onClick={openSignIn}
             className={`px-8 py-2.5 rounded-full ml-4 transition-all duration-500 ${
               isScrolled ? "text-white bg-black" : "bg-white text-black"
-            }`}
+            } `}
           >
             Login
           </button>
@@ -158,7 +161,7 @@ const Navbar = () => {
             onClick={openSignIn}
             className={`px-8 py-2.5 rounded-full ml-4 transition-all duration-500 ${
               isScrolled ? "text-white bg-black" : "bg-white text-black"
-            }`}
+            } ${isNotHomePage && 'bg-black text-white'}`}
           >
             Login
           </button>
