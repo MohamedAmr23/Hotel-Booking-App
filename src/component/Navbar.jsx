@@ -3,8 +3,9 @@ import { assets } from "../assets/assets";
 import { useClerk, UserButton, useUser } from "@clerk/clerk-react";
 import { useLocation, useNavigate } from "react-router-dom";
 const Navbar = () => {
-  const {pathname} = useLocation()
+  const { pathname } = useLocation();
   const isNotHomePage = pathname !== "/";
+
   const navLinks = [
     { name: "Home", path: "/" },
     { name: "Hotels", path: "/rooms" },
@@ -12,27 +13,41 @@ const Navbar = () => {
     { name: "About", path: "/about" },
   ];
 
-  const BookIcon = ()=>(
-    <svg className="w-4 h-4 text-gray-700" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" >
-    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 19V4a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v13H7a2 2 0 0 0-2 2Zm0 0a2 2 0 0 0 2 2h12M9 3v14m7 0v4" />
-</svg>
-)
+  const BookIcon = () => (
+    <svg
+      className="w-4 h-4 text-gray-700"
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      fill="none"
+      viewBox="0 0 24 24"
+    >
+      <path
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2"
+        d="M5 19V4a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v13H7a2 2 0 0 0-2 2Zm0 0a2 2 0 0 0 2 2h12M9 3v14m7 0v4"
+      />
+    </svg>
+  );
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const { openSignIn } = useClerk();
   const { user } = useUser();
 
-  const navigate = useNavigate()
-  const location = useLocation()
+  const navigate = useNavigate();
+  const location = useLocation();
   useEffect(() => {
-    if(location.pathname!=="/"){
-      setIsScrolled(true)
-    }else{
-      setIsScrolled(false)
+    if (location.pathname !== "/") {
+      setIsScrolled(true);
+    } else {
+      setIsScrolled(false);
     }
 
-    setIsScrolled(prev=> location.pathname!=="/"?true:prev)
+    setIsScrolled((prev) => (location.pathname !== "/" ? true : prev));
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
     };
@@ -41,16 +56,19 @@ const Navbar = () => {
   }, [location.pathname]);
   return (
     <nav
-
       className={`fixed top-0 left-0  w-full flex items-center justify-between px-4 md:px-16 lg:px-24 xl:px-32 transition-all duration-500 z-50 ${
         isScrolled
           ? "bg-white/80 shadow-md text-gray-700 backdrop-blur-lg py-3 md:py-4"
           : "py-4 md:py-6"
-      } ${isNotHomePage && 'bg-white shadow-md text-gray-700'}`}
+      } ${isNotHomePage && "bg-white shadow-md text-gray-700"}`}
     >
       {/* Logo */}
       <a href="/">
-        <img src={assets.logo} alt="Logo" className={`${isScrolled ? "invert" : ""} ${isNotHomePage && 'invert'}`} />
+        <img
+          src={assets.logo}
+          alt="Logo"
+          className={`${isScrolled ? "invert" : ""} ${isNotHomePage && "invert"}`}
+        />
       </a>
 
       {/* Desktop Nav */}
@@ -60,26 +78,32 @@ const Navbar = () => {
             key={i}
             href={link.path}
             className={`group flex flex-col gap-0.5 ${
-              isScrolled ? "text-gray-700" : "text-white"
-            } ${isNotHomePage && 'text-gray-700'}`}
+              isScrolled
+                ? "text-gray-700"
+                : `${isNotHomePage ? "text-gray-700" : "text-white"}`
+            }
+            `}
           >
             {link.name}
             <div
               className={`${
                 isScrolled ? "bg-gray-700" : "bg-white"
-              } ${isNotHomePage && 'bg-gray-700'} h-0.5 w-0 group-hover:w-full transition-all duration-300`}
+              } h-0.5 w-0 group-hover:w-full transition-all duration-300`}
             />
           </a>
         ))}
-        {user &&  <button
-          onClick={()=>navigate('/owner')}
-          className={`border px-4 py-1 text-sm font-light rounded-full cursor-pointer ${
-            isScrolled ? "text-black" : "text-white"
-          } ${isNotHomePage && 'text-black'} transition-all`}
-        >
-          Dashboard
-        </button>}
-       
+        {user && (
+          <button
+            onClick={() => navigate("/owner")}
+            className={`border px-4 py-1 text-sm font-light rounded-full cursor-pointer ${
+              isScrolled
+                ? "text-black"
+                : `${isNotHomePage ? "text-black" : "text-white"}`
+            } transition-all`}
+          >
+            Dashboard
+          </button>
+        )}
       </div>
 
       {/* Desktop Right */}
@@ -89,19 +113,25 @@ const Navbar = () => {
           alt="search icon"
           className={`${
             isScrolled && "invert"
-          } ${isNotHomePage && 'invert'} h-7 transition-all duration-500`}
+          } ${isNotHomePage && "invert"} h-7 transition-all duration-500`}
         />
         {user ? (
           <UserButton>
             <UserButton.MenuItems>
-              <UserButton.Action label="My Booking" labelIcon={<BookIcon />} onClick={()=>navigate('/my-bookings')}/>
+              <UserButton.Action
+                label="My Booking"
+                labelIcon={<BookIcon />}
+                onClick={() => navigate("/my-bookings")}
+              />
             </UserButton.MenuItems>
           </UserButton>
         ) : (
           <button
             onClick={openSignIn}
             className={`px-8 py-2.5 rounded-full ml-4 transition-all duration-500 ${
-              isScrolled ? "text-white bg-black" : "bg-white text-black"
+              isScrolled
+                ? "text-white bg-black"
+                : `${isNotHomePage ? "bg-black text-white" : "bg-white text-black"}`
             } `}
           >
             Login
@@ -111,23 +141,29 @@ const Navbar = () => {
 
       {/* Mobile Menu Button */}
       <div className="flex items-center gap-3 md:hidden">
-        {user && <UserButton>
+        {user && (
+          <UserButton>
             <UserButton.MenuItems>
-              <UserButton.Action label="My Booking" labelIcon={<BookIcon />} onClick={()=>navigate('/my-bookings')}/>
+              <UserButton.Action
+                label="My Booking"
+                labelIcon={<BookIcon />}
+                onClick={() => navigate("/my-bookings")}
+              />
             </UserButton.MenuItems>
-          </UserButton>}
+          </UserButton>
+        )}
         <img
           src={assets.menuIcon}
           alt="menu icon"
           className={`${
             isScrolled && "invert"
-          } h-4 transition-all duration-500`}
+          } ${isNotHomePage && "invert"} h-4 transition-all duration-500`}
           onClick={() => setIsMenuOpen(!isMenuOpen)}
         />
       </div>
 
       {/* Mobile Menu */}
-      
+
       <div
         className={`fixed top-0 left-0 w-full h-screen bg-white text-base flex flex-col md:hidden items-center justify-center gap-6 font-medium text-gray-800 transition-all duration-500 ${
           isMenuOpen ? "translate-x-0" : "-translate-x-full"
@@ -146,14 +182,23 @@ const Navbar = () => {
           </a>
         ))}
 
-        {user && <button onClick={()=>navigate('/owner')} className="border px-4 py-1 text-sm font-light rounded-full cursor-pointer transition-all">
-          Dashboard
-        </button>}
+        {user && (
+          <button
+            onClick={() => navigate("/owner")}
+            className="border px-4 py-1 text-sm font-light rounded-full cursor-pointer transition-all"
+          >
+            Dashboard
+          </button>
+        )}
 
-         {user ? (
+        {user ? (
           <UserButton>
             <UserButton.MenuItems>
-              <UserButton.Action label="My Booking" labelIcon={<BookIcon />} onClick={()=>navigate('/my-bookings')}/>
+              <UserButton.Action
+                label="My Booking"
+                labelIcon={<BookIcon />}
+                onClick={() => navigate("/my-bookings")}
+              />
             </UserButton.MenuItems>
           </UserButton>
         ) : (
@@ -161,7 +206,7 @@ const Navbar = () => {
             onClick={openSignIn}
             className={`px-8 py-2.5 rounded-full ml-4 transition-all duration-500 ${
               isScrolled ? "text-white bg-black" : "bg-white text-black"
-            } ${isNotHomePage && 'bg-black text-white'}`}
+            } ${isNotHomePage && "bg-black text-white"}`}
           >
             Login
           </button>
